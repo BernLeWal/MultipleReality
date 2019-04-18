@@ -72,6 +72,10 @@ bool MRDemo::run()
 	if ( !depth )
 		return true;		//If one of them is unavailable, continue iteration
 
+	if (settings.density > 1) {
+		depth = dec_filter.process(depth);
+	}
+
 	// Generate the pointcloud and texture mappings
 	points = pc.calculate(depth);
 	rs2::video_frame color = frames.get_color_frame();
@@ -223,13 +227,17 @@ void MRDemo::glRegisterCallbacks()
 			std::cout << "reset to initial view" << std::endl;
 		}
 		else if (key == GLFW_KEY_SLASH /* DE:[-] */ || key == GLFW_KEY_KP_SUBTRACT) {
-			if (settings.density < 64)
-				settings.density <<= 1;
+			if (settings.density < 8) {
+				settings.density++;
+				dec_filter.set_option(RS2_OPTION_FILTER_MAGNITUDE, settings.density);
+			}
 			std::cout << "density=" << settings.density << " //incremented" << std::endl;
 		}
 		else if (key == GLFW_KEY_RIGHT_BRACKET /* DE:[+] */ || key == GLFW_KEY_KP_ADD) {
-			if (settings.density > 1)
-				settings.density >>= 1;
+			if (settings.density > 1) {
+				settings.density--;
+				dec_filter.set_option(RS2_OPTION_FILTER_MAGNITUDE, settings.density);
+			}
 			std::cout << "density=" << settings.density << " //decremented" << std::endl;
 		}
 

@@ -32,7 +32,7 @@ public:
 	}
 
 	void reset() {
-		density = 1;
+		density = 2;
 		colored = true;
 		scanMinZ = 0.0f;		// m
 		scanMaxZ = 1.0f;		// m default=1.73f

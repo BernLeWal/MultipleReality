@@ -39,8 +39,6 @@ int MRScene::renderPointCloud(rs2::points points)
 	{
 		if (vertices[i].z > settings.scanMaxZ || vertices[i].z <= settings.scanMinZ)
 			continue;
-		if ((settings.density > 1) && (((int)(1000 * vertices[i].x) % settings.density) || ((int)(1000 * vertices[i].y) % settings.density)))
-			continue;
 		totalPointCount += renderPoint(vertices[i], tex_coords[i]);
 	}
 
@@ -58,8 +56,6 @@ int MRScene::renderPointCloud(rs2::points points)
 //		for (unsigned int i = start; i < points.size(); i+=NUM_THREADS)
 //		{
 //			if (vertices[i].z > settings.scanMaxZ || vertices[i].z <= settings.scanMinZ)
-//				continue;
-//			if ((settings.density > 1) && (((int)(1000 * vertices[i].x) % settings.density) || ((int)(1000 * vertices[i].y) % settings.density)))
 //				continue;
 //			pc += renderPoint(vertices[i], tex_coords[i]);
 //		}
@@ -448,8 +444,6 @@ int MRSceneTron::renderPointCloud(rs2::points points)
 	for (unsigned int i = 0; i < points.size(); i++)
 	{
 		if (vertices[i].z > settings.scanMaxZ || vertices[i].z <= settings.scanMinZ)
-			continue;
-		if ((settings.density > 1) && (((int)(1000 * vertices[i].x) % settings.density) || ((int)(1000 * vertices[i].y) % settings.density)))
 			continue;
 		currentPointIndex += renderPoint(vertices[i], tex_coords[i]);
 	}

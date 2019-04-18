@@ -16,6 +16,7 @@ private:
 	glfw_state app_state;
 	std::string currentPath;
 
+	rs2::decimation_filter dec_filter;	// to reduce the density
 	rs2::pointcloud pc;	// Pointcloud object, for calculating pointclouds and texture mappings
 	rs2::points points;	// We want the points object to be persistent so we can display the last cloud when a frame drops
 	rs2::pipeline pipe;	// RealSense pipeline, encapsulating the actual device and sensors
